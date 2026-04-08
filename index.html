@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroConnect – Public Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="index.html">🌾 AgroConnect</a>
+  <ul>
+    <li><a href="#crops">Crops</a></li>
+    <li><a href="#weather">Weather</a></li>
+    <li><a href="#market">Market</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li id="nav-auth-link"><a href="login.html" class="nav-btn">Login / Sign Up</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>🌱 Smart Agriculture for a Better Tomorrow</h1>
+  <p>Access real-time crop data, weather forecasts, market prices, and expert farming guidance — all in one place.</p>
+  <a href="#crops" class="btn btn-primary">Explore Crops</a>
+  <a href="login.html" class="btn btn-outline" id="hero-mgmt-btn">Go to Management</a>
+</div>
+
+<!-- WEATHER STRIP -->
+<div class="weather-strip">
+  <strong>📍 Today's Weather</strong>
+  <div class="w-item">🌡️ <span id="temp">28°C</span></div>
+  <div class="w-item">💧 Humidity: <span id="humidity">65%</span></div>
+  <div class="w-item">🌬️ Wind: <span id="wind">12 km/h</span></div>
+  <div class="w-item">☀️ <span id="condition">Partly Cloudy</span></div>
+  <div class="w-item">🌧️ Rain chance: <span id="rain">20%</span></div>
+</div>
+
+<!-- CROPS -->
+<section id="crops">
+  <h2>🌾 Featured Crops</h2>
+  <div class="cards" id="crop-cards"></div>
+</section>
+
+<!-- MARKET PRICES -->
+<section id="market">
+  <h2>📊 Live Market Prices</h2>
+  <table>
+    <thead>
+      <tr><th>Crop</th><th>Price (₹/Quintal)</th><th>Change</th><th>Market</th></tr>
+    </thead>
+    <tbody id="market-table"></tbody>
+  </table>
+</section>
+
+<!-- SCHEMES -->
+<section id="schemes">
+  <h2>🏛️ Government Schemes</h2>
+  <div class="cards" id="scheme-cards"></div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <h2>📰 Agriculture News</h2>
+  <div class="news-grid" id="news-grid"></div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2>📞 Contact & Support</h2>
+  <div class="cards">
+    <div class="card"><div class="icon">📞</div><h3>Helpline</h3><p>1800-180-1551 (Toll Free)</p></div>
+    <div class="card"><div class="icon">✉️</div><h3>Email</h3><p>support@agroconnect.in</p></div>
+    <div class="card"><div class="icon">🏢</div><h3>Office</h3><p>Ministry of Agriculture, New Delhi</p></div>
+    <div class="card"><div class="icon">🌐</div><h3>Portal</h3><p>www.agroconnect.in</p></div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 AgroConnect | Public Portal &nbsp;|&nbsp; <a href="management.html" style="color:#95d5b2">Management Portal</a>
+</footer>
+
+<script src="auth.js"></script>
+<script>
+  // Update nav based on session
+  const _s = getSession();
+  if (_s) {
+    const li = document.getElementById('nav-auth-link');
+    if (_s.role !== 'public') {
+      li.innerHTML = `<a href="management.html" class="nav-btn">Dashboard</a>`;
+      document.getElementById('hero-mgmt-btn').href = 'management.html';
+    } else {
+      li.innerHTML = `<span style="color:#cde;font-size:.9rem">👤 ${_s.name}</span> &nbsp;<a href="#" class="nav-btn" onclick="logout()">Logout</a>`;
+    }
+  }
+</script>
+<script src="public.js"></script>
+</body>
+</html>

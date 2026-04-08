@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroConnect – Login / Sign Up</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 55%, #52b788 100%);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .auth-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .auth-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.25);
+      width: 100%;
+      max-width: 440px;
+      overflow: hidden;
+    }
+
+    .auth-header {
+      background: linear-gradient(135deg, #1b4332, #2d6a4f);
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1.5rem 1.5rem;
+    }
+    .auth-header .logo { font-size: 2rem; margin-bottom: .4rem; }
+    .auth-header h2   { font-size: 1.3rem; font-weight: 700; }
+    .auth-header p    { font-size: .85rem; opacity: .8; margin-top: .3rem; }
+
+    .auth-tabs {
+      display: flex;
+      border-bottom: 2px solid #eee;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: .9rem;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: .95rem;
+      color: var(--gray);
+      background: #f8fdf9;
+      border: none;
+      transition: all .2s;
+    }
+    .auth-tab.active {
+      color: var(--green);
+      background: #fff;
+      border-bottom: 3px solid var(--green);
+    }
+
+    .auth-body { padding: 1.8rem; }
+
+    .auth-form { display: none; }
+    .auth-form.active { display: block; }
+
+    .auth-form .form-group { margin-bottom: 1rem; }
+    .auth-form label { font-size: .85rem; font-weight: 600; color: #444; display: block; margin-bottom: .35rem; }
+    .auth-form input,
+    .auth-form select {
+      width: 100%;
+      padding: .6rem .9rem;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: .92rem;
+      outline: none;
+      transition: border .2s;
+    }
+    .auth-form input:focus,
+    .auth-form select:focus { border-color: var(--light-green); }
+
+    .input-wrap { position: relative; }
+    .input-wrap input { padding-right: 2.5rem; }
+    .toggle-pw {
+      position: absolute;
+      right: .7rem;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: .75rem;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: .5rem;
+      transition: background .2s, transform .15s;
+    }
+    .auth-btn:hover { background: #1b4332; transform: translateY(-1px); }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      margin: 1rem 0;
+      color: var(--gray);
+      font-size: .82rem;
+    }
+    .divider::before,
+    .divider::after { content: ''; flex: 1; height: 1px; background: #eee; }
+
+    .social-btns { display: flex; gap: .8rem; }
+    .social-btn {
+      flex: 1;
+      padding: .55rem;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      font-size: .88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      transition: background .2s;
+    }
+    .social-btn:hover { background: #f5f5f5; }
+
+    .error-msg {
+      background: #fde8e8;
+      color: #c0392b;
+      border-radius: 8px;
+      padding: .6rem .9rem;
+      font-size: .85rem;
+      margin-bottom: .8rem;
+      display: none;
+    }
+    .success-msg {
+      background: #d4edda;
+      color: #155724;
+      border-radius: 8px;
+      padding: .6rem .9rem;
+      font-size: .85rem;
+      margin-bottom: .8rem;
+      display: none;
+    }
+
+    .strength-bar { display: flex; gap: 4px; margin-top: .4rem; }
+    .strength-seg { flex: 1; height: 4px; border-radius: 4px; background: #eee; transition: background .3s; }
+
+    .role-info {
+      background: var(--pale-green);
+      border-radius: 8px;
+      padding: .6rem .9rem;
+      font-size: .82rem;
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: .85rem;
+      color: var(--gray);
+    }
+    .back-link a { color: var(--green); font-weight: 600; text-decoration: none; }
+
+    footer { background: rgba(0,0,0,.2); color: #cde; text-align: center; padding: 1rem; font-size: .82rem; }
+    footer a { color: #95d5b2; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">🌾 AgroConnect</a>
+  <ul>
+    <li><a href="index.html">← Back to Home</a></li>
+  </ul>
+</nav>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+
+    <div class="auth-header">
+      <div class="logo">🌾</div>
+      <h2>Welcome to AgroConnect</h2>
+      <p>Smart Agriculture Management Platform</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login-btn" onclick="switchTab('login')">🔑 Login</button>
+      <button class="auth-tab" id="tab-signup-btn" onclick="switchTab('signup')">📝 Sign Up</button>
+    </div>
+
+    <div class="auth-body">
+
+      <!-- LOGIN FORM -->
+      <form class="auth-form active" id="login-form" onsubmit="handleLogin(event)">
+        <div class="error-msg"   id="login-error"></div>
+        <div class="success-msg" id="login-success"></div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="login-email" placeholder="you@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-wrap">
+            <input type="password" id="login-password" placeholder="Enter your password" required />
+            <span class="toggle-pw" onclick="togglePw('login-password', this)">👁️</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Login As</label>
+          <select id="login-role">
+            <option value="public">🌍 Public User</option>
+            <option value="manager">🏢 Farm Manager</option>
+            <option value="admin">🔐 Admin</option>
+          </select>
+        </div>
+
+        <button type="submit" class="auth-btn">Login →</button>
+
+        <div class="divider">or continue with</div>
+        <div class="social-btns">
+          <button type="button" class="social-btn" onclick="socialLogin('Google')">🌐 Google</button>
+          <button type="button" class="social-btn" onclick="socialLogin('Facebook')">📘 Facebook</button>
+        </div>
+
+        <div class="back-link">
+          Don't have an account? <a href="#" onclick="switchTab('signup')">Sign Up</a>
+        </div>
+      </form>
+
+      <!-- SIGNUP FORM -->
+      <form class="auth-form" id="signup-form" onsubmit="handleSignup(event)">
+        <div class="error-msg"   id="signup-error"></div>
+        <div class="success-msg" id="signup-success"></div>
+
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="signup-name" placeholder="Rajesh Kumar" required />
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="signup-email" placeholder="you@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="signup-phone" placeholder="+91 98765 43210" />
+        </div>
+
+        <div class="form-group">
+          <label>Role</label>
+          <select id="signup-role" onchange="updateRoleInfo()">
+            <option value="public">🌍 Public User – Browse crops, market prices</option>
+            <option value="manager">🏢 Farm Manager – Full management access</option>
+            <option value="admin">🔐 Admin – Complete system control</option>
+          </select>
+          <div class="role-info" id="role-info">Access to public portal: crops, weather, market prices & news.</div>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-wrap">
+            <input type="password" id="signup-password" placeholder="Create a strong password" required oninput="checkStrength(this.value)" />
+            <span class="toggle-pw" onclick="togglePw('signup-password', this)">👁️</span>
+          </div>
+          <div class="strength-bar">
+            <div class="strength-seg" id="s1"></div>
+            <div class="strength-seg" id="s2"></div>
+            <div class="strength-seg" id="s3"></div>
+            <div class="strength-seg" id="s4"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <div class="input-wrap">
+            <input type="password" id="signup-confirm" placeholder="Re-enter password" required />
+            <span class="toggle-pw" onclick="togglePw('signup-confirm', this)">👁️</span>
+          </div>
+        </div>
+
+        <button type="submit" class="auth-btn">Create Account →</button>
+
+        <div class="back-link">
+          Already have an account? <a href="#" onclick="switchTab('login')">Login</a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 AgroConnect &nbsp;|&nbsp; <a href="index.html">Public Portal</a> &nbsp;|&nbsp; <a href="management.html">Management Portal</a>
+</footer>
+
+<script src="auth.js"></script>
+</body>
+</html>
